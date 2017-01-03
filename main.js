@@ -14,15 +14,17 @@ flickr = new Flickr(keys);
 app.get('/', function (req, res) {
   console.log('Querying flickr for photos...')
   // flickr search
+  flickr_api_page = _.random(30)
   flickr.get("photos.search", {"tags":"puffin",
                                "safe_search": 1,
                                "text": "puffin",
-                               "per_page": 300,
-                               "content_type": 1},
+                               "per_page": 10,
+                               "content_type": 1,
+                               "page": flickr_api_page},
       function(err, result){
-      if (err) {
+      if ((err) || (!result.photos))  {  // check if there are errors or no photo results
         console.error(err);
-        res.status(500).send('Error querying flickr')
+        res.status(500).send('Error querying Flickr')
         return false;
       }
       rand_puffin_photo = _.sample(result.photos.photo)
