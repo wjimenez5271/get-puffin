@@ -14,7 +14,12 @@ flickr = new Flickr(keys);
 app.get('/', function (req, res) {
   console.log('Querying flickr for photos...')
   // flickr search
-  flickr.get("photos.search", {"tags":"puffin", "safe_search": 1, "text": "puffin"}, function(err, result){
+  flickr.get("photos.search", {"tags":"puffin",
+                               "safe_search": 1,
+                               "text": "puffin",
+                               "per_page": 300,
+                               "content_type": 1},
+      function(err, result){
       if (err) {
         console.error(err);
         res.status(500).send('Error querying flickr')
